@@ -62,55 +62,53 @@ InputParameters::InputParameters(std::string input_filename)
 
   if (input_file.is_open()) {
     std::cout << "Reading input parameters...\n";
-    while (input_file.good()) {
-      // Line 1. Get tensor properties.
-      {
-        ++line_count;
-        std::getline(input_file, line);
-        std::istringstream line_stream(line);
-        line_stream >> basis_params.J0 >> basis_params.g0 >> basis_params.T0_min
-            >> basis_params.T0_max;
-        mcutils::ParsingCheck(line_stream, line_count, line);
-      }
+    // Line 1. Get tensor properties.
+    {
+      ++line_count;
+      std::getline(input_file, line);
+      std::istringstream line_stream(line);
+      line_stream >> basis_params.J0 >> basis_params.g0 >> basis_params.T0_min
+          >> basis_params.T0_max;
+      mcutils::ParsingCheck(line_stream, line_count, line);
+    }
 
-      // Line 2. Get operator basis parameters.
-      {
-        ++line_count;
-        std::getline(input_file, line);
-        std::istringstream line_stream(line);
-        line_stream >> basis_params.Nmax >> hbomega;
-        mcutils::ParsingCheck(line_stream, line_count, line);
-      }
+    // Line 2. Get operator basis parameters.
+    {
+      ++line_count;
+      std::getline(input_file, line);
+      std::istringstream line_stream(line);
+      line_stream >> basis_params.Nmax >> hbomega;
+      mcutils::ParsingCheck(line_stream, line_count, line);
+    }
 
-      // Set miscellaneous labels fields.
-      basis_params.symmetry_phase_mode = basis::SymmetryPhaseMode::kHermitian;
+    // Set miscellaneous labels fields.
+    basis_params.symmetry_phase_mode = basis::SymmetryPhaseMode::kHermitian;
 
-      // Line 3. Get LENPIC semilocal coordinate space regulator parameter.
-      {
-        ++line_count;
-        std::getline(input_file, line);
-        std::istringstream line_stream(line);
-        line_stream >> R;
-        mcutils::ParsingCheck(line_stream, line_count, line);
-      }
+    // Line 3. Get LENPIC semilocal coordinate space regulator parameter.
+    {
+      ++line_count;
+      std::getline(input_file, line);
+      std::istringstream line_stream(line);
+      line_stream >> R;
+      mcutils::ParsingCheck(line_stream, line_count, line);
+    }
 
-      // Line 4. Get operator choice.
-      {
-        ++line_count;
-        std::getline(input_file, line);
-        std::istringstream line_stream(line);
-        line_stream >> op_name >> op_order >> op_abody;
-        mcutils::ParsingCheck(line_stream, line_count, line);
-      }
+    // Line 4. Get operator choice.
+    {
+      ++line_count;
+      std::getline(input_file, line);
+      std::istringstream line_stream(line);
+      line_stream >> op_name >> op_order >> op_abody;
+      mcutils::ParsingCheck(line_stream, line_count, line);
+    }
 
-      // Line 5. Get output filename.
-      {
-        ++line_count;
-        std::getline(input_file, line);
-        std::istringstream line_stream(line);
-        line_stream >> target_filename;
-        mcutils::ParsingCheck(line_stream, line_count, line);
-      }
+    // Line 5. Get output filename.
+    {
+      ++line_count;
+      std::getline(input_file, line);
+      std::istringstream line_stream(line);
+      line_stream >> target_filename;
+      mcutils::ParsingCheck(line_stream, line_count, line);
     }
   }
   else {

@@ -29,10 +29,10 @@ void ConstructMu2nNLOOperator(
   std::cout << " Constructing M1 operator...\n";
   assert(op_params.J0 == 1);
   assert(op_params.g0 == 0);
-  assert((op_params.T0_min == 1) && (op_params.T0_max == 1));
+  assert((op_params.T0_min <= 1) && (op_params.T0_max >= 1));
 
   // Alias isospin rank.
-  int T0 = op_params.T0_min;
+  int T0 = 1;
 
   // Generate required harmonic oscillator basis functions, and radial
   // integral weights.
@@ -82,6 +82,12 @@ void ConstructMu2nNLOOperator(
   std::cout << "  Starting matrix element calculation...\n";
   for (std::size_t sector_index = 0; sector_index < sectors.size();
        ++sector_index) {
+
+    // progress output
+    if (sector_index % 50 == 0)
+      std::cout << "[" << sector_index << "/" << sectors.size() << "]" << std::endl;
+    std::cout << "." << std::flush;
+
     const basis::RelativeCMSectorsLSJT::SectorType& sector =
         sectors.GetSector(sector_index);
     const basis::RelativeCMSubspaceLSJT& bra_subspace = sector.bra_subspace();
